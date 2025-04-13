@@ -7,7 +7,7 @@ const Footer = () => {
     <footer className="footer border z-10 border-t-[#33353F] border-l-transparent border-r-transparent text-white">
       <div className="container p-12 flex justify-between">
         <Image
-          src="/images/static/portfoliologo.png"
+          src="/images/logos/portfoliologo.png"
           alt="Logo"
           width={50}
           height={50}
