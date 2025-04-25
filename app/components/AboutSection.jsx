@@ -2,6 +2,7 @@
 import React, {useTransition, useState}from 'react'
 import Image from 'next/image'
 import TabButton from './TabButton';
+import video from '../../videos/video.mp4';
 
 const TAB_DATA = [
   {
@@ -104,8 +105,8 @@ const AboutSection = () => {
   return (
     <section className='text-white'>
       <div className='md:grid grid-cols-2 gap-8 items-center py-8 px-4 xl:gap-16 sm:py-16'>
-        <Image src="/images/logos/about-image.png" alt='about'  width={500} height={500} className='rounded-lg shadow-lg' />
-        <div className='mt-4 md:mt-0 text-left flex flex-col h-full'>
+        <video src={video} autoPlay muted loop className= 'h-[500px] w-full object-cover rounded-xl xl:h-[600px]'/>
+        <div className='mt-4 md:mt-0 text-left flex flex-col h-full justify-center'>
           <h2 className='text-4xl font-bold text-white mb-4'>About Me</h2>
           <p className='text-base lg;text-lg'>
             I’m 22 years old, currently in my pre-final semester of B.Tech in CSE. I enjoy outdoor sports and am always up for a good challenge. I love meeting smart people, learning from them, and sharing my knowledge to grow together.
