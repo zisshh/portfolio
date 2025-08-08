@@ -21,23 +21,30 @@ export default function DocsPage() {
     return () => clearInterval(id);
   }, []);
 
+  // Auth button (from enhance-portfolio-website-features)
+  const authenticate = async () => {
+    const pw = prompt('Enter edit password');
+    if (!pw) return;
+    const auth = await fetch('/api/auth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pw })
+    });
+    if (!auth.ok) {
+      alert('Wrong password');
+      return;
+    }
+    setIsAuth(true);
+    setPassword(pw);
+  };
+
+  // Unified handleEdit logic (prompt if not authed, otherwise use password)
   const handleEdit = async (id) => {
     const idx = docs.findIndex(d => d.id === id);
     const current = docs[idx];
     if (!isAuth) {
-      const pw = prompt('Enter edit password');
-      if (!pw) return;
-      const auth = await fetch('/api/auth', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password: pw })
-      });
-      if (!auth.ok) {
-        alert('Wrong password');
-        return;
-      }
-      setIsAuth(true);
-      setPassword(pw);
+      await authenticate();
+      if (!isAuth) return;
     }
     const newContent = prompt('Edit content', current.content);
     if (newContent == null) return;
@@ -59,6 +66,15 @@ export default function DocsPage() {
   return (
     <div className="container mx-auto p-4 text-white">
       <h1 className="text-3xl mb-4">Documentation</h1>
+      {/* Auth button visible only when NOT authed */}
+      {!isAuth && (
+        <button
+          className="mb-4 px-3 py-1 bg-blue-600 rounded"
+          onClick={authenticate}
+        >
+          Authenticate
+        </button>
+      )}
       <input
         className="mb-4 p-2 w-full text-black"
         placeholder="Search docs"
@@ -77,7 +93,15 @@ export default function DocsPage() {
             <h2 className="text-xl font-bold">{doc.title}</h2>
             <small className="text-gray-400">{doc.date}</small>
             <p className="my-2 whitespace-pre-wrap">{doc.content}</p>
-            <button className="mt-2 px-3 py-1 bg-blue-600 rounded" onClick={() => handleEdit(doc.id)}>Edit</button>
+            {/* Show Edit button only if authed */}
+            {isAuth && (
+              <button
+                className="mt-2 px-3 py-1 bg-blue-600 rounded"
+                onClick={() => handleEdit(doc.id)}
+              >
+                Edit
+              </button>
+            )}
           </motion.div>
         ))}
       </div>
