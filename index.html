@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#docs">Documentation</a></li>
+      <li><a href="/download-cv" id="cv-link">Download CV</a></li>
+    </ul>
+  </nav>
+
+  <section id="home" class="fade">
+    <h1>My Portfolio</h1>
+    <div class="skills">
+      <div class="skill"><span>JavaScript</span><div class="bar"><div class="fill js"></div></div></div>
+      <div class="skill"><span>Node.js</span><div class="bar"><div class="fill node"></div></div></div>
+      <div class="skill"><span>CSS</span><div class="bar"><div class="fill css"></div></div></div>
+    </div>
+    <div class="portfolio">
+      <div class="portfolio-item">Project A</div>
+      <div class="portfolio-item">Project B</div>
+      <div class="portfolio-item">Project C</div>
+    </div>
+  </section>
+
+  <section id="docs" class="fade">
+    <h2>Documentation</h2>
+    <input type="text" id="search" placeholder="Search docs">
+    <div id="docs-list"></div>
+  </section>
+
+  <script src="scripts.js"></script>
+</body>
+</html>
