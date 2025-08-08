@@ -37,8 +37,7 @@ const HersoSection = () => {
             />
           </h1>
           <p className="text-[#ADB7BE] text-base sm:text-lg mb-6 lg:text-xl">
-            I'm a student pursuing my major in CompSci and a passionate learner. I love building
-            things and solving
+            I'm a student pursuing my major in CompSci and a passionate learner. I love building things and solving
           </p>
           <div>
             <Link
@@ -51,7 +50,9 @@ const HersoSection = () => {
               href="/api/download-cv"
               className="px-1 inline-block py-1 w-full sm:w-fit rounded-full bg-gradient-to-br from-[#ff8200] via-[#d47e28] to-[#c48435] hover:bg-slate-800 text-white mt-3"
             >
-              <div className="block bg-[#121212] hover:bg-slate-800 rounded-full px-5 py-2">Download CV</div>
+              <div className="block bg-[#121212] hover:bg-slate-800 rounded-full px-5 py-2">
+                Download CV
+              </div>
             </a>
           </div>
         </motion.div>
