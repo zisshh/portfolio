@@ -1,16 +1,20 @@
 import { NextResponse } from 'next/server';
-
-// Fail fast if the admin password is missing
-if (!process.env.DOCS_ADMIN_PASSWORD) {
-  console.error('DOCS_ADMIN_PASSWORD not set');
-  process.exit(1);
-}
-
-const PASSWORD = process.env.DOCS_ADMIN_PASSWORD;
+import { getDocsPassword } from '../../lib/env.server';
 
 export async function POST(req) {
   const { password } = await req.json();
-  if (password === PASSWORD) {
+  const secret = getDocsPassword();
+  if (secret === '__UNSET__') {
+    return NextResponse.json(
+      {
+        ok: false,
+        code: 'E_ENV',
+        message: 'DOCS_ADMIN_PASSWORD not configured on server.',
+      },
+      { status: 500 }
+    );
+  }
+  if (password === secret) {
     return NextResponse.json({ success: true });
   }
   return NextResponse.json({ success: false }, { status: 401 });
