@@ -31,6 +31,9 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # env files (can opt-in for committing if needed)
+.env
+.env.local
+*.env
 .env*.local
 
 # vercel
@@ -46,3 +49,5 @@ videos/*
 !videos/*.js
 !videos/*.ts
 public/_next-video
+docs/.history/.trash/
+docs/.staging/

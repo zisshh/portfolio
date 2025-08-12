@@ -3,10 +3,27 @@ import fs from 'fs';
 import path from 'path';
 
 const docsDir = path.join(process.cwd(), 'docs');
-const PASSWORD = process.env.DOCS_PASSWORD || 'changeme';
+
+// Fail fast if the admin password is missing
+if (!process.env.DOCS_ADMIN_PASSWORD) {
+  console.error('DOCS_ADMIN_PASSWORD not set');
+  process.exit(1);
+}
+
+const PASSWORD = process.env.DOCS_ADMIN_PASSWORD;
 
 function sanitize(str) {
   return str.replace(/<script.*?>.*?<\/script>/gi, '');
+}
+
+export async function GET(req, { params }) {
+  const { id } = params;
+  const filePath = path.join(docsDir, `${id}.json`);
+  if (!fs.existsSync(filePath)) {
+    return NextResponse.json({ error: 'Not found' }, { status: 404 });
+  }
+  const doc = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+  return NextResponse.json(doc);
 }
 
 export async function POST(req, { params }) {

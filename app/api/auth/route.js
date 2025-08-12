@@ -1,6 +1,12 @@
 import { NextResponse } from 'next/server';
 
-const PASSWORD = process.env.DOCS_PASSWORD || 'changeme';
+// Fail fast if the admin password is missing
+if (!process.env.DOCS_ADMIN_PASSWORD) {
+  console.error('DOCS_ADMIN_PASSWORD not set');
+  process.exit(1);
+}
+
+const PASSWORD = process.env.DOCS_ADMIN_PASSWORD;
 
 export async function POST(req) {
   const { password } = await req.json();
