@@ -6,7 +6,6 @@ const { default: withVideos } = await import('next-videos');
 /** @type {import('next').NextConfig} */
 const baseConfig = {
   reactStrictMode: true,
-  swcMinify: true,
 };
 
 const nextConfig = withVideos(baseConfig);

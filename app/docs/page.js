@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import Navbar from "../components/Navbar";
+import Link from "next/link";
 
 export default function DocsPage() {
   const [docs, setDocs] = useState([]);
@@ -64,47 +66,52 @@ export default function DocsPage() {
   const filtered = docs.filter(d => d.title.toLowerCase().includes(search.toLowerCase()));
 
   return (
-    <div className="container mx-auto p-4 text-white">
-      <h1 className="text-3xl mb-4">Documentation</h1>
-      {/* Auth button visible only when NOT authed */}
-      {!isAuth && (
-        <button
-          className="mb-4 px-3 py-1 bg-blue-600 rounded"
-          onClick={authenticate}
-        >
-          Authenticate
-        </button>
-      )}
-      <input
-        className="mb-4 p-2 w-full text-black"
-        placeholder="Search docs"
-        value={search}
-        onChange={e => setSearch(e.target.value)}
-      />
-      <div className="space-y-6">
-        {filtered.map(doc => (
-          <motion.div
-            key={doc.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className="p-4 border border-gray-700 rounded"
+    <main className="flex min-h-screen flex-col bg-[#121212] text-white">
+      <Navbar />
+      <div className="container mt-24 mx-auto p-4">
+        <h1 className="text-3xl mb-4">Documentation</h1>
+        {/* Auth button visible only when NOT authed */}
+        {!isAuth && (
+          <button
+            className="mb-4 px-3 py-1 bg-blue-600 rounded"
+            onClick={authenticate}
           >
-            <h2 className="text-xl font-bold">{doc.title}</h2>
-            <small className="text-gray-400">{doc.date}</small>
-            <p className="my-2 whitespace-pre-wrap">{doc.content}</p>
-            {/* Show Edit button only if authed */}
-            {isAuth && (
-              <button
-                className="mt-2 px-3 py-1 bg-blue-600 rounded"
-                onClick={() => handleEdit(doc.id)}
-              >
-                Edit
-              </button>
-            )}
-          </motion.div>
-        ))}
+            Authenticate
+          </button>
+        )}
+        <input
+          className="mb-4 p-2 w-full text-black"
+          placeholder="Search docs"
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+        />
+        <div className="space-y-6">
+          {filtered.map(doc => (
+            <motion.div
+              key={doc.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="p-4 border border-gray-700 rounded"
+            >
+              <Link href={`/docs/${doc.id}`} className="block">
+                <h2 className="text-xl font-bold hover:underline">{doc.title}</h2>
+              </Link>
+              <small className="text-gray-400">{doc.date}</small>
+              <p className="my-2 whitespace-pre-wrap line-clamp-3">{doc.content}</p>
+              {/* Show Edit button only if authed */}
+              {isAuth && (
+                <button
+                  className="mt-2 px-3 py-1 bg-blue-600 rounded"
+                  onClick={() => handleEdit(doc.id)}
+                >
+                  Edit
+                </button>
+              )}
+            </motion.div>
+          ))}
+        </div>
       </div>
-    </div>
+    </main>
   );
 }
